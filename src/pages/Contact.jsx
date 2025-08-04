@@ -4,39 +4,38 @@ import { contactFields } from "../fields/fields";
 import { useState } from "react";
 
 function Contact() {
-
   const contactForm = {
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   };
 
-  const [valid, setValid] = useState(false)
+  const [valid, setValid] = useState(false);
   const [formState, setFormState] = useState(contactForm);
 
   const handleChange = (e, fieldName) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const {name, value} = e.target;
+    const { name, value } = e.target;
 
-    if(fieldName === 'email') {
+    if (fieldName === "email") {
       setValid(emailRegex.test(value));
     }
-  
-    setFormState(prev => ({
+
+    setFormState((prev) => ({
       ...prev,
-      [name]: value
-    }))
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
-    if(!valid) {
+    if (!valid) {
       alert("Form contains errors. Please fix them before submitting.");
       e.preventDefault();
-      return
+      return;
     }
     console.log("Here can be an API call");
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -56,6 +55,7 @@ function Contact() {
             elem.type === "multiline" ? (
               <Box key={elem.id}>
                 <TextField
+                  required
                   key={elem.id}
                   name={elem.name}
                   id={elem.name}
@@ -67,21 +67,24 @@ function Contact() {
                   size='small'
                   multiline
                   rows={5}
-                  required={true}
                 />
               </Box>
             ) : (
               <Box key={elem.id}>
                 <TextField
+                  required
                   key={elem.id}
                   name={elem.name}
                   id={elem.name}
                   label={elem.title}
                   type={elem.format}
-                  error={elem.name === 'email' && !valid} 
-                  helperText={elem.name === 'email' && !valid ? 'Invalid email address' : ''}
-                  required={true}
-                  onChange={e => handleChange(e, elem.name)}
+                  error={elem.name === "email" && !valid}
+                  helperText={
+                    elem.name === "email" && !valid
+                      ? "Invalid email address"
+                      : ""
+                  }
+                  onChange={(e) => handleChange(e, elem.name)}
                   sx={{ width: 300 }}
                   margin='dense'
                   variant='outlined'
@@ -91,7 +94,9 @@ function Contact() {
             )
           )}
           <Box>
-            <Button variant="contained" type="submit" sx={{mt: "1em"}}>Send</Button>
+            <Button variant='contained' type='submit' sx={{ mt: "1em" }}>
+              Send
+            </Button>
           </Box>
         </Box>
         <Box sx={contactBoxStyle}>
@@ -101,19 +106,23 @@ function Contact() {
               sx={{ fontWeight: "bold", fontStyle: "italic" }}>
               General inquiries{" "}
             </Typography>
-            <Typography>Have a question or complaint ? Get in touch!</Typography>
+            <Typography>
+              Have a question or complaint ? Get in touch!
+            </Typography>
             <Typography>Email: info@bebaker.com</Typography>
             <Typography>Phone: +44 7911 777777</Typography>
           </Box>
-          <Box sx={{mt: "2em"}}>
-          <Typography
+          <Box sx={{ mt: "2em" }}>
+            <Typography
               variant='h6'
               sx={{ fontWeight: "bold", fontStyle: "italic" }}>
               Our head office{" "}
             </Typography>
-            <Typography> 221b Baker St, London NW1 6XE, United Kingdom</Typography>
+            <Typography>
+              {" "}
+              221b Baker St, London NW1 6XE, United Kingdom
+            </Typography>
           </Box>
-          
         </Box>
       </Box>
     </form>

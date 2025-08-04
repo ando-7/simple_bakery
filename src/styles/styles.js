@@ -25,40 +25,49 @@ export const iconBoxStyle = {
 };
 
 export const careerBoxStyle = {
-  width: "80%",
-  margin: "auto",
-  fontSize: "1.3rem",
+  width: "100%",
+  fontSize: "1.4rem",
   display: "flex",
-  justifyContent: "space-between",
-  flexWrap: "wrap"
+  justifyContent: "space-around",
+  flexWrap: "wrap",
+  mx: "auto",
+  textAlign: "center"
 };
 
 export const singlePositionBoxStyle = {
   backgroundColor: "whitesmoke",
   minHeight: "7em",
-  width: "25em",
+  width: "22em",
   minWidth: "15em",
   border: "1px solid",
   borderRadius: "10px",
   padding: "1em",
   boxShadow: "-4px 4px 11px #bfbfbf",
-  mb: "1.5em"
 };
 
 export const newPositionBoxStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   minHeight: "7em",
-  width: "25em",
+  width: "22em",
   minWidth: "15em",
   border: "1px solid",
   borderRadius: "10px",
   padding: "1em",
-  boxShadow: "-4px 4px 11px #bfbfbf",
-  mb: "1.5em",
-}
+  boxShadow: "-4px 4px 11px #bfbfbf"
+};
 
+export const newProductBoxStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "10em",
+  border: "1px solid",
+  borderRadius: "10px",
+  padding: "1em",
+  boxShadow: "-4px 4px 11px #bfbfbf"
+};
 
 export const contactBoxStyle = {
   backgroundColor: "whitesmoke",
@@ -69,5 +78,14 @@ export const contactBoxStyle = {
   borderRadius: "10px",
   padding: "1em",
   mb: "4em",
-  mr: "1.5em"
+  mr: "1.5em",
 };
+
+export const newProductComponent  = {
+   width: "10em",
+   height: "13em",
+   display: "flex",
+   mx: "1em",
+   mb: "1.5em",
+   
+}

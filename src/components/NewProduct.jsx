@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { newProductBoxStyle } from "../styles/styles";
 import {
   Box,
   TextField,
@@ -6,54 +7,49 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
+  Typography,
+  Input,
 } from "@mui/material";
-import { newPositionDetails, employmentTypeOption } from "../fields/fields";
+import { newProductDetails } from "../fields/fields";
 import {
   handleChange,
+  imageHandler,
   preventInvalidNumberInput,
-  handleSubmit,
   handleDialogOpen,
   handleDialogClose,
+  handleSubmit,
 } from "../handlers/handlers";
-import { v4 as uuid } from "uuid";
-import { newPositionBoxStyle } from "../styles/styles";
-import { initialPosition } from "../states/initialStates";
+import { initialProduct } from "../states/initialStates";
 
-function NewPosition({
+export const NewProduct = ({
   open,
   setOpen,
   editData,
-  selectedPosition,
-  setSelectedPosition,
-}) {
-  const [newPosition, setNewPosition] = useState(editData || initialPosition);
+  setSelectedProduct
+}) => {
+  const [newProduct, setNewProduct] = useState(initialProduct);
 
   useEffect(() => {
     if (editData) {
-      setNewPosition(editData);
+      editData.image = null; 
+      setNewProduct(editData);
     }
   }, [editData]);
 
   return (
     <>
       <Box
-        sx={{ ...newPositionBoxStyle, cursor: "pointer" }}
+        sx={{ ...newProductBoxStyle, cursor: "pointer" }}
         onClick={() => !open && handleDialogOpen(setOpen)}>
-        <Box>
-          <Button
-            sx={{
-              fontSize: "2rem",
-              color: "#f5f5f5",
-              textTransform: "none",
-              pointerEvents: "none",
-            }}>
-            Add new position
-          </Button>
-        </Box>
+        <Typography
+          sx={{
+            fontSize: "2rem",
+            color: "#f5f5f5",
+            textTransform: "none",
+            pointerEvents: "none",
+          }}>
+          Add Product
+        </Typography>
       </Box>
 
       <Dialog
@@ -61,30 +57,31 @@ function NewPosition({
         onClose={() =>
           handleDialogClose(
             setOpen,
-            setNewPosition,
-            setSelectedPosition,
-            initialPosition
+            setNewProduct,
+            setSelectedProduct,
+            initialProduct
           )
         }>
         <DialogTitle>
-          {selectedPosition ? "Update Position" : "New Position"}{" "}
+          {editData ? "Update Product" : "New Product"}{" "}
         </DialogTitle>
         <DialogContent>
           <form
             onSubmit={() =>
               handleSubmit(
-                "positions",
-                newPosition,
+                "products",
+                newProduct,
                 handleDialogClose(
                   setOpen,
-                  setNewPosition,
-                  setSelectedPosition,
-                  initialPosition
-                )
+                  setNewProduct,
+                  setSelectedProduct,
+                  initialProduct
+                ),
+                editData ? "edit" : "create",
               )
             }>
             <Box display='flex' flexDirection='column'>
-              {newPositionDetails.map((field) =>
+              {newProductDetails.map((field) =>
                 field.type === "text" ? (
                   <TextField
                     required
@@ -97,12 +94,8 @@ function NewPosition({
                     margin='dense'
                     variant='outlined'
                     size='small'
-                    value={
-                      selectedPosition
-                        ? selectedPosition[field.name]
-                        : newPosition[field.name]
-                    }
-                    onChange={ selectedPosition ? (e) => handleChange(setSelectedPosition, e) : (e) => handleChange(setNewPosition, e)}
+                    value={newProduct[field.name]}
+                    onChange={(e) => handleChange(setNewProduct, e)} 
                     inputProps={
                       field.format === "number"
                         ? {
@@ -128,31 +121,15 @@ function NewPosition({
                     }
                   />
                 ) : (
-                  <FormControl
-                    margin='dense'
-                    sx={{ width: 300 }}
-                    key={field.id}>
-                    <InputLabel margin='dense' size='small'>
-                      Employment type
-                    </InputLabel>
-                    <Select
-                      required
-                      name={field.name}
-                      value={newPosition.employmentType}
-                      selected={newPosition.employmentType}
-                      label='Employment type'
-                      size='small'
-                      onChange={(e) => handleChange(setNewPosition, e)}>
-                      {employmentTypeOption.map((elem) => (
-                        <MenuItem
-                          key={uuid()}
-                          value={elem.value}
-                          defaultValue={newPosition.employmentType}>
-                          {elem.title}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                  <Input
+                    required={editData ? false : true}
+                    key={field.id}
+                    name={field.name}
+                    type='file'
+                    onChange={(e) => imageHandler(setNewProduct, e)}
+                    sx={{ width: 300, marginTop: "1em" }}
+                    inputProps={{ accept: "image/*" }}
+                  />
                 )
               )}
             </Box>
@@ -167,9 +144,9 @@ function NewPosition({
                 onClick={() =>
                   handleDialogClose(
                     setOpen,
-                    setNewPosition,
-                    setSelectedPosition,
-                    initialPosition
+                    setNewProduct,
+                    setSelectedProduct,
+                    initialProduct
                   )
                 }>
                 Close
@@ -180,6 +157,4 @@ function NewPosition({
       </Dialog>
     </>
   );
-}
-
-export default NewPosition;
+};
