@@ -1,0 +1,17 @@
+[
+  {
+    "id": null,
+    "title": "Baker",
+    "salary": 3000,
+    "location": "London",
+    "employmentType": "FULL_TIME"
+  },
+
+  {
+    "id": null,
+    "title": "Technichian",
+    "salary": 3500,
+    "location": "London",
+    "employmentType": "PART_TIME"
+  }
+]
