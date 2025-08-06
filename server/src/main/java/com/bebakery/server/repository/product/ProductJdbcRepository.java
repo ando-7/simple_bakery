@@ -1,7 +1,7 @@
 package com.bebakery.server.repository.product;
 
-import com.bebakery.server.dto.product.CreateProductRequest;
-import com.bebakery.server.dto.product.UpdateProductRequest;
+import com.bebakery.server.dto.product.CreateProductDto;
+import com.bebakery.server.dto.product.UpdateProductDto;
 import com.bebakery.server.errors.EntityNotFoundException;
 import com.bebakery.server.model.Product;
 import com.bebakery.server.service.product.ProductUpdateService;
@@ -55,13 +55,13 @@ public class ProductJdbcRepository {
         }
     }
 
-    public void createProduct(CreateProductRequest request) throws IOException {
+    public void createProduct(CreateProductDto request) throws IOException {
         String imagePath = uploadImage(request.image());
         String sql = "INSERT INTO Product (title, price, image_path, date_created) VALUES (?, ?, ?, NOW())";
         jdbcTemplate.update(sql, request.title(), request.price(), imagePath);
     }
 
-    public void updateProduct(long id, UpdateProductRequest product, Product existingProduct) throws IOException {
+    public void updateProduct(long id, UpdateProductDto product, Product existingProduct) throws IOException {
         String sql = "UPDATE Product SET title = ?, price = ?, image_path = ?, date_updated = NOW() WHERE id = ?";
         Product updatedProduct = ProductUpdateService.updateProduct(id, product, existingProduct);
         int rows = jdbcTemplate.update(sql,

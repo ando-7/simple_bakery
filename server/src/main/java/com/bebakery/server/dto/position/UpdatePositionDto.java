@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 
-public record UpdatePositionRequest(
+public record UpdatePositionDto(
         @Id long id,
         @NotBlank String title,
         @NotNull double salary,

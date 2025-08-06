@@ -2,43 +2,26 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { contactBoxStyle } from "../styles/styles";
 import { contactFields } from "../fields/fields";
 import { useState } from "react";
+import { handleChangeWithValidation, handleSubmit } from "../handlers/handlers";
+import { initalContact } from "../states/initialStates";
 
 function Contact() {
-  const contactForm = {
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  };
 
-  const [valid, setValid] = useState(false);
-  const [formState, setFormState] = useState(contactForm);
-
-  const handleChange = (e, fieldName) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const { name, value } = e.target;
-
-    if (fieldName === "email") {
-      setValid(emailRegex.test(value));
-    }
-
-    setFormState((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    if (!valid) {
-      alert("Form contains errors. Please fix them before submitting.");
-      e.preventDefault();
-      return;
-    }
-    console.log("Here can be an API call");
-  };
+  const [valid, setValid] = useState({
+    email: false,
+    phone: false
+  });
+  const [newContact, setNewContact] = useState(initalContact);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => {
+
+      if(!valid.email || !valid.phone) {
+        e.preventDefault();
+        return;
+      } 
+      handleSubmit("contacts", newContact, null)
+    }}>
       <Box display='flex' sx={{ justifyContent: "center", flexWrap: "wrap" }}>
         <Box sx={contactBoxStyle}>
           <Box>
@@ -58,6 +41,7 @@ function Contact() {
                   required
                   key={elem.id}
                   name={elem.name}
+                  value={newContact[elem.name]}
                   id={elem.name}
                   label={elem.title}
                   type={elem.format}
@@ -67,6 +51,7 @@ function Contact() {
                   size='small'
                   multiline
                   rows={5}
+                  onChange={(e) => handleChangeWithValidation(setNewContact, e, setValid)}
                 />
               </Box>
             ) : (
@@ -75,20 +60,25 @@ function Contact() {
                   required
                   key={elem.id}
                   name={elem.name}
+                  value={newContact[elem.name]}
                   id={elem.name}
                   label={elem.title}
                   type={elem.format}
-                  error={elem.name === "email" && !valid}
+                  error={(elem.name === "email" && newContact[elem.name].length > 0  && !valid.email) 
+                    || (elem.name === "phone" && newContact[elem.name].length > 0  && !valid.phone)}
                   helperText={
-                    elem.name === "email" && !valid
+                    elem.name === "email" && newContact[elem.name].length > 0  && !valid
                       ? "Invalid email address"
                       : ""
+                      || (elem.name === "phone" && newContact[elem.name].length > 0  && !valid.phone)
+                      ? "Invalid phone number"
+                      : ""
                   }
-                  onChange={(e) => handleChange(e, elem.name)}
                   sx={{ width: 300 }}
                   margin='dense'
                   variant='outlined'
                   size='small'
+                  onChange={(e) => handleChangeWithValidation(setNewContact, e, setValid)}
                 />
               </Box>
             )

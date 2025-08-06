@@ -1,6 +1,6 @@
 package com.bebakery.server.service.product;
 
-import com.bebakery.server.dto.product.UpdateProductRequest;
+import com.bebakery.server.dto.product.UpdateProductDto;
 import com.bebakery.server.model.Product;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import static com.bebakery.server.service.product.ImageHandlerService.uploadImag
 public class ProductUpdateService {
 
     
-    public static Product updateProduct(Long id, UpdateProductRequest request, Product existingProduct) throws IOException {
+    public static Product updateProduct(Long id, UpdateProductDto request, Product existingProduct) throws IOException {
         String imagePath = uploadImage(request.image());
 
         return new Product(

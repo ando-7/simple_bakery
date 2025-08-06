@@ -13,6 +13,29 @@ export const handleChange = (stateSetter, e) => {
   }));
 };
 
+export const handleChangeWithValidation = (stateSetter, e, setValid) => {
+  const { name, value } = e.target;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\+?[0-9\s\-()]{7,20}$/;
+
+  if (name === "email") {
+    setValid((prev) => ({
+      ...prev,
+      [name]: emailRegex.test(value),
+    }));
+  } else if (name === "phone") {
+    setValid((prev) => ({
+      ...prev,
+      [name]: phoneRegex.test(value),
+    }));
+  }
+
+  stateSetter((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
 export const imageHandler = (stateSetter, e) => {
   const { name } = e.target;
   const file = e.target.files[0];
@@ -34,9 +57,9 @@ export const imageHandler = (stateSetter, e) => {
 
 export const createFormData = (state) => {
   const formData = new FormData();
-    for (const key in state) {
+  for (const key in state) {
     const value = state[key];
-     if (value !== null && value !== undefined) {
+    if (value !== null && value !== undefined) {
       formData.append(key, value);
     }
   }
@@ -50,7 +73,7 @@ export const preventInvalidNumberInput = (e) => {
 };
 
 export const handleSubmit = (config, data, closeDialogWindow, typeOfSubmit) => {
-  if(typeOfSubmit === "edit") {
+  if (typeOfSubmit === "edit") {
     updateElement(config, data.id, createFormData(data), closeDialogWindow);
   } else {
     postFunc(config, createFormData(data), closeDialogWindow);
@@ -73,7 +96,6 @@ export const handleDialogClose = (
 };
 
 export const handleSearch = (searchTerm, data, setFilteredData) => {
-
   if (!searchTerm) {
     setFilteredData(data);
     return;
@@ -85,4 +107,4 @@ export const handleSearch = (searchTerm, data, setFilteredData) => {
     )
   );
   setFilteredData(filtered);
-}
+};

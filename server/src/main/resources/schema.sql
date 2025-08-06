@@ -31,3 +31,14 @@ CREATE TABLE IF NOT EXISTS Applicant(
       CONSTRAINT fk_position
           FOREIGN KEY (position_id) REFERENCES Position(id)
 );
+
+
+CREATE TABLE IF NOT EXISTS Contact(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(55) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    date_created TIMESTAMP NOT NULL,
+    handled BOOLEAN NOT NULL
+);

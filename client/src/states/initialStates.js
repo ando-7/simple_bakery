@@ -10,3 +10,10 @@ export const initialProduct = {
     price: "",
     image: null,
 }
+
+export const initalContact = {
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+}

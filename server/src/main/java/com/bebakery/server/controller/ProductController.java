@@ -1,7 +1,7 @@
 package com.bebakery.server.controller;
 
-import com.bebakery.server.dto.product.CreateProductRequest;
-import com.bebakery.server.dto.product.UpdateProductRequest;
+import com.bebakery.server.dto.product.CreateProductDto;
+import com.bebakery.server.dto.product.UpdateProductDto;
 import com.bebakery.server.errors.EntityNotFoundException;
 import com.bebakery.server.model.Product;
 import com.bebakery.server.repository.product.ProductJdbcRepository;
@@ -39,13 +39,13 @@ public class ProductController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void create(@ModelAttribute CreateProductRequest request) throws IOException {
+    public void create(@ModelAttribute CreateProductDto request) throws IOException {
         productRepository.createProduct(request);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void updateProduct(@PathVariable long id, @ModelAttribute UpdateProductRequest request) throws IOException {
+    public void updateProduct(@PathVariable long id, @ModelAttribute UpdateProductDto request) throws IOException {
         Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isEmpty()) {
             throw new EntityNotFoundException("Product with id " + id + " not found");

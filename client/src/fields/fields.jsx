@@ -81,7 +81,12 @@ export const contactFields = [
     type: "singleline",
     format: "text",
   },
-  { id: 2, name: "email", title: "Email", type: "singleline", format: "text" },
+  { 
+    id: 2, 
+    name: "email", 
+    title: "Email", 
+    type: "singleline", 
+    format: "text" },
   {
     id: 3,
     name: "phone",
