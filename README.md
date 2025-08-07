@@ -42,7 +42,7 @@ This is a full-stack web application for a bakery business. It consists of:
 1. Navigate to the backend folder:
    ```bash
    cd server
-2. Configure application.properties file to make sure the project uses your own cridentials for DB connection (additionally delete the active.profile=dev config)
+2. Configure application.properties file to make sure the project uses your own cridentials for DB connection (additionally comment out or remove  spring.profiles.active=dev config)
 3. Run the application
 
 #### Frontend
