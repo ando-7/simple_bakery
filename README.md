@@ -4,6 +4,7 @@ This is a full-stack web application for a bakery business. It consists of:
 
 - **Frontend**: Built with React (JavaScript)
 - **Backend**: Powered by Spring Boot (Java)
+- DB: PostgreSQL
 
 ## 🌐 Features
 
